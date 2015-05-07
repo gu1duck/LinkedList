@@ -24,6 +24,8 @@ int main(int argc, const char * argv[]) {
     Node node0;
     node0.value = 1;
     
+    //Node* head = &node0;
+    
     Node node1;
     node1.value = 2;
     node0.next = &node1;
@@ -32,27 +34,31 @@ int main(int argc, const char * argv[]) {
     node2.value = 3;
     node1.next = &node2;
     
-    printListFromStartingNode(&node0);
+    Node* head = &node0;
     
-    newNodeAtEndOfListDefinedByNode(&node0, 4);
+    printListFromStartingNode(head);
+    
+    newNodeAtEndOfListDefinedByNode(head, 4);
     
     int query = 4;
-    Node* searchResult = searchListForIntFromStartingNode(&query, &node0);
+    Node* searchResult = searchListForIntFromStartingNode(&query, head);
     if (searchResult){
         printf("Search result is at list index: %d\n",(searchResult->value-1));
     } else{
-        printf("Query is not present.");
+        printf("Query is not present.\n");
     }
+    printListFromStartingNode(head);
     
-    newNodeAtEndOfListDefinedByNode(&node0, 5);
+    newNodeAtEndOfListDefinedByNode(head, 5);
     
     query = 5;
-    searchResult = searchListForIntFromStartingNode(&query, &node0);
+    searchResult = searchListForIntFromStartingNode(&query, head);
     if (searchResult){
         printf("Search result is at list index: %d\n",(searchResult->value-1));
     } else{
         printf("Query is not present.");
     }
+    printListFromStartingNode(head);
 
     
     return 0;

@@ -20,6 +20,7 @@ Node* searchListForIntFromStartingNode(int *query, Node *thisNode);
 void insertNodeAtEndOfList(Node* thisNode, Node* head);
 void removeNodeByPointer(Node* target, Node* head);
 Node* newNodeWithValue (int value);
+void deallocateList (Node *head);
 
 int main(int argc, const char * argv[]) {
     
@@ -30,8 +31,11 @@ int main(int argc, const char * argv[]) {
     Node* node3 = newNodeWithValue(3);
     insertNodeAtEndOfList(node3,head);
     printListFromStartingNode(head);
-    removeNodeByPointer(node1,head);
+    removeNodeByPointer(node2,head);
     printListFromStartingNode(head);
+    //deallocateList(head);
+    
+    
     
     
     return 0;
@@ -80,4 +84,12 @@ Node* newNodeWithValue (int value){
     Node* node = (Node*)malloc(sizeof(Node));
     node->value = value;
     return node;
+}
+
+void deallocateList (Node *head){
+    Node* query= head;
+        while (query->next->next != NULL){
+            query = query->next;
+        }
+        free(query->next);
 }

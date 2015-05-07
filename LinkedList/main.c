@@ -14,7 +14,8 @@ struct Node {
     Node* next;
 };
 
-void printListFromStartingNode(Node *startingNode);
+void printListFromStartingNode(Node *thisNode);
+Node* searchListForIntFromStartingNode(int *query, Node *thisNode);
 
 int main(int argc, const char * argv[]) {
     
@@ -31,13 +32,31 @@ int main(int argc, const char * argv[]) {
     
     printListFromStartingNode(&node0);
     
+    int query = 3;
+    Node* searchResult = searchListForIntFromStartingNode(&query, &node0);
+    if (searchResult){
+        printf("Search result is at list index: %d\n",(searchResult->value-1));
+    } else{
+        printf("Query is not present.");
+    }
     
     return 0;
 }
 
-void printListFromStartingNode(Node *startingNode){
-    printf("%d\n", startingNode->value);
-    if (startingNode->next){
-        printListFromStartingNode(startingNode->next);
+void printListFromStartingNode(Node *thisNode){
+    printf("%d\n", thisNode->value);
+    if (thisNode->next){
+        printListFromStartingNode(thisNode->next);
     }
 }
+
+Node* searchListForIntFromStartingNode(int *query, Node *thisNode){
+    if (thisNode->value == *query){
+        return thisNode;
+    } else if (thisNode->next){
+        return searchListForIntFromStartingNode(query, thisNode->next);
+    } else {
+        return NULL;
+    }
+}
+

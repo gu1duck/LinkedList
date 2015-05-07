@@ -17,13 +17,14 @@ struct Node {
 
 void printListFromStartingNode(Node *thisNode);
 Node* searchListForIntFromStartingNode(int *query, Node *thisNode);
-void newNodeAtEndOfListDefinedByNode(Node* thisNode, int value);
+void newNodeAtEndOfList(Node* thisNode, int value);
 void removeNodeByPointer(Node* target, Node* head);
 
 int main(int argc, const char * argv[]) {
     
     Node node0;
     node0.value = 1;
+    node0.next = NULL;
     
     //Node* head = &node0;
     
@@ -39,7 +40,7 @@ int main(int argc, const char * argv[]) {
     
     printListFromStartingNode(head);
     
-    newNodeAtEndOfListDefinedByNode(head, 4);
+    newNodeAtEndOfList(head, 4);
     
     int query = 4;
     Node* searchResult = searchListForIntFromStartingNode(&query, head);
@@ -50,7 +51,7 @@ int main(int argc, const char * argv[]) {
     }
     printListFromStartingNode(head);
     
-    newNodeAtEndOfListDefinedByNode(head, 5);
+    newNodeAtEndOfList(head, 5);
     
     query = 5;
     searchResult = searchListForIntFromStartingNode(&query, head);
@@ -88,9 +89,9 @@ int main(int argc, const char * argv[]) {
 }
 
 void printListFromStartingNode(Node *thisNode){
-    printf("%d\n", thisNode->value);
-    if (thisNode->next){
-        printListFromStartingNode(thisNode->next);
+    while(thisNode->next != NULL){
+        printf("%d\n", thisNode->value);
+        thisNode = thisNode->next;
     }
 }
 
@@ -104,14 +105,12 @@ Node* searchListForIntFromStartingNode(int *query, Node *thisNode){
     }
 }
 
-void newNodeAtEndOfListDefinedByNode(Node* thisNode, int value){
-    if (thisNode->next){
-        newNodeAtEndOfListDefinedByNode(thisNode->next, value);
-    } else {
-        thisNode->next = malloc(sizeof(Node));
-        thisNode->next->value = value;
+void newNodeAtEndOfList(Node* thisNode, int value){
+    while (thisNode->next != NULL){
+        thisNode = thisNode->next;
     }
-    
+        thisNode->next = malloc(sizeof(Node));
+    thisNode->next->value = value;
 }
 
 void removeNodeByPointer(Node* target, Node* head){

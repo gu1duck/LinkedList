@@ -18,6 +18,7 @@ struct Node {
 void printListFromStartingNode(Node *thisNode);
 Node* searchListForIntFromStartingNode(int *query, Node *thisNode);
 void newNodeAtEndOfListDefinedByNode(Node* thisNode, int value);
+void removeNodeByPointer(Node* target, Node* head);
 
 int main(int argc, const char * argv[]) {
     
@@ -56,7 +57,29 @@ int main(int argc, const char * argv[]) {
     if (searchResult){
         printf("Search result is at list index: %d\n",(searchResult->value-1));
     } else{
-        printf("Query is not present.");
+        printf("Query is not present.\n");
+    }
+    printListFromStartingNode(head);
+    
+    removeNodeByPointer(node2.next, head);
+    
+    query = 5;
+    searchResult = searchListForIntFromStartingNode(&query, head);
+    if (searchResult){
+        printf("Search result is at list index: %d\n",(searchResult->value-1));
+    } else{
+        printf("Query is not present.\n");
+    }
+    printListFromStartingNode(head);
+    
+    removeNodeByPointer(node2.next, head);
+    
+    query = 5;
+    searchResult = searchListForIntFromStartingNode(&query, head);
+    if (searchResult){
+        printf("Search result is at list index: %d\n",(searchResult->value-1));
+    } else{
+        printf("Query is not present.\n");
     }
     printListFromStartingNode(head);
 
@@ -89,4 +112,18 @@ void newNodeAtEndOfListDefinedByNode(Node* thisNode, int value){
         thisNode->next->value = value;
     }
     
+}
+
+void removeNodeByPointer(Node* target, Node* head){
+    if (target == head){
+        head = head->next;
+        free(target);
+    } else {
+        Node * query = head;
+        while (query->next != target){
+            query = query->next;
+        }
+        query->next = query->next->next;
+        free(target);
+    }
 }

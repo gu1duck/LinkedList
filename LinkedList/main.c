@@ -15,58 +15,68 @@ struct Node {
     Node* next;
 };
 
-void printListFromStartingNode(Node *thisNode);
-Node* searchListForIntFromStartingNode(int *query, Node *thisNode);
-void insertNodeAtEndOfList(Node* thisNode, Node* head);
-void removeNodeByPointer(Node* target, Node* head);
+void printListFromStartingNode();
+Node* searchListForIntFromStartingNode(int *target);
+void insertNodeAtEndOfList(Node* thisNode);
+void removeNodeByPointer(Node* target);
 Node* newNodeWithValue (int value);
-void deallocateList (Node *head);
+void deallocateList ();
+
+Node* head;
 
 int main(int argc, const char * argv[]) {
     
     Node* node1 = newNodeWithValue(1);
-    Node* head = node1;
+    insertNodeAtEndOfList(node1);
     Node* node2 = newNodeWithValue(2);
-    insertNodeAtEndOfList(node2,head);
+    insertNodeAtEndOfList(node2);
     Node* node3 = newNodeWithValue(3);
-    insertNodeAtEndOfList(node3,head);
-    printListFromStartingNode(head);
-    removeNodeByPointer(node2,head);
-    printListFromStartingNode(head);
-    //deallocateList(head);
-    
-    
-    
+    insertNodeAtEndOfList(node3);
+    printListFromStartingNode();
+    removeNodeByPointer(node1);
+    printListFromStartingNode();
+    deallocateList();
+    printListFromStartingNode();
     
     return 0;
 }
 
-void printListFromStartingNode(Node *thisNode){
-    while(thisNode != NULL){
-        printf("%d\n", thisNode->value);
-        thisNode = thisNode->next;
-    }
-}
-
-Node* searchListForIntFromStartingNode(int *query, Node *thisNode){
-    if (thisNode->value == *query){
-        return thisNode;
-    } else if (thisNode->next){
-        return searchListForIntFromStartingNode(query, thisNode->next);
-    } else {
-        return NULL;
-    }
-}
-
-void insertNodeAtEndOfList(Node* thisNode, Node* head){
+void printListFromStartingNode(){
     Node* query = head;
-    while (query->next != NULL){
+    if (query == NULL){
+        printf("NO LIST");
+    }
+    while(query != NULL){
+        printf("%d\n", query->value);
         query = query->next;
     }
-        query->next = thisNode;
 }
 
-void removeNodeByPointer(Node* target, Node* head){
+Node* searchListForIntFromStartingNode(int *target){
+    Node* query = head;
+    while (query->value != *target){
+        if (query->next == NULL){
+            return NULL;
+        }else{
+            query = query->next;
+        }
+    }
+    return query;
+}
+
+void insertNodeAtEndOfList(Node* thisNode){
+    if (head == NULL){
+        head = thisNode;
+    } else {
+        Node* query = head;
+        while (query->next != NULL){
+            query = query->next;
+        }
+        query->next = thisNode;
+    }
+}
+
+void removeNodeByPointer(Node* target){
     if (target == head){
         head = head->next;
         free(target);
@@ -86,10 +96,8 @@ Node* newNodeWithValue (int value){
     return node;
 }
 
-void deallocateList (Node *head){
-    Node* query= head;
-        while (query->next->next != NULL){
-            query = query->next;
-        }
-        free(query->next);
+void deallocateList (){
+    while(head != NULL){
+        removeNodeByPointer(head);
+    }
 }

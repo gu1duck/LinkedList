@@ -14,6 +14,8 @@ struct Node {
     Node* next;
 };
 
+void printListFromStartingNode(Node *startingNode);
+
 int main(int argc, const char * argv[]) {
     
     Node node0;
@@ -21,12 +23,21 @@ int main(int argc, const char * argv[]) {
     
     Node node1;
     node1.value = 2;
-    node0.next = &node0;
+    node0.next = &node1;
     
     Node node2;
     node2.value = 3;
-    node2.next = &node1;
+    node1.next = &node2;
+    
+    printListFromStartingNode(&node0);
     
     
     return 0;
+}
+
+void printListFromStartingNode(Node *startingNode){
+    printf("%d\n", startingNode->value);
+    if (startingNode->next){
+        printListFromStartingNode(startingNode->next);
+    }
 }

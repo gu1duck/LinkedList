@@ -21,6 +21,7 @@ void insertNodeAtEndOfList(Node* thisNode);
 void removeNodeByPointer(Node* target);
 Node* newNodeWithValue (int value);
 void deallocateList ();
+int getIndexFromPointer (Node* target);
 
 Node* head;
 
@@ -33,8 +34,17 @@ int main(int argc, const char * argv[]) {
     Node* node3 = newNodeWithValue(3);
     insertNodeAtEndOfList(node3);
     printListFromStartingNode();
-    removeNodeByPointer(node1);
+    
+    int target = 2;
+    int queryResult = getIndexFromPointer(searchListForIntFromStartingNode(&target));
+    printf("Found target %d at index %d\n", target, queryResult);
+    
+    removeNodeByPointer(node2);
     printListFromStartingNode();
+    
+    queryResult = getIndexFromPointer(searchListForIntFromStartingNode(&target));
+    printf("Found target %d at index %d\n", target, queryResult);
+    
     deallocateList();
     printListFromStartingNode();
     
@@ -100,4 +110,18 @@ void deallocateList (){
     while(head != NULL){
         removeNodeByPointer(head);
     }
+}
+
+int getIndexFromPointer (Node* target){
+    Node * query = head;
+    int count = 0;
+    while (query != target){
+        if (query->next == NULL){
+            return -1;
+        } else {
+            count++;
+            query = query->next;
+        }
+    }
+    return count;
 }
